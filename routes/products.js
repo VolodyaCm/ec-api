@@ -102,4 +102,19 @@ router.get('/get/count', async (req, res) => {
   }
 })
 
+router.get('/get/featured', async (req, res) => {
+  const { limit = 12, offset = 0 } = req.query;
+  console.log(limit, offset);
+  try {
+    const products = await Product.find({ isFeatured: true })
+      .skip(+offset)
+      .limit(+limit);
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+    })
+  }
+});
+
 export default router;
