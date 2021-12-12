@@ -1,14 +1,20 @@
 import mongoose from 'mongoose';
-import ProductModel from './product',
 
 const { Schema, model } = mongoose;
 
 const CategorySchema = Schema({
-  id: String,
-  product: ProductModel,
-  quantity: Number
+  name: {
+    type: String,
+    required: true,
+  },
+  icon: {
+    type: String,
+  },
+  color: {
+    type: String,
+  },
 })
 
-const Ctegory = model('category', CategorySchema);
+const Category = model('Category', CategorySchema);
 
-export default Ctegory
+export default Category;
