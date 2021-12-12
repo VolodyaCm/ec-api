@@ -7,11 +7,14 @@ import mongoose from 'mongoose';
 import Product from './models/product.js';
 import productsRouter from './routes/products.js';
 import usersRouter from './routes/users.js';
+import cors from 'cors';
 
 const { MONGO_URI, API_URL } = process.env;
 
 const app = express();
 
+app.use(cors());
+app.options('*', cors());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
