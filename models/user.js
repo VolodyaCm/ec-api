@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const { Schema } = mongoose;
+const { Schema, model } = mongoose;
 
 const UserSchema = Schema({
   name: String,
@@ -15,6 +15,6 @@ const UserSchema = Schema({
   isAdmin: Boolean,
 });
 
-const User = mongoose.model('user', UserSchema);
+const User = model('user', UserSchema);
 
 export default User;
