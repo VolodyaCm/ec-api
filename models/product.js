@@ -59,4 +59,12 @@ const ProductSchema = Schema({
 
 const Product = model('Product', ProductSchema);
 
+ProductSchema.virtual('id').get(function () {
+  return this._id?.toHexString();
+});
+
+ProductSchema.set('toJSON', {
+  virtuals: true,
+})
+
 export default Product;

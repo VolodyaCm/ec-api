@@ -1,14 +1,17 @@
 import express from 'express';
 import Product from '../models/product.js';
 import Category from '../models/category.js';
+import { normalizeFilter } from '../helpers/queryParams.js';
 
 const router = express.Router();
 
 router.get(`/`, async (req, res, next) => {
   try {
-    const products = await Product.find().select('name image -_id');
+    const filter = normalizeFilter(req.query.filter);
+    const products = await Product.find(filter).select('name image -_id');
     res.status(200).json(products);
   } catch (error) {
+    console.error(error);
     res.status(500)
   }
 });
@@ -18,6 +21,7 @@ router.get('/:id', async (req, res) => {
     const product = await Product.findById(req.params.id).populate('category');
     res.status(200).json(product);
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       success: false
     })
@@ -43,6 +47,7 @@ router.put('/:id', async (req, res) => {
 
     res.status(204).json(record);
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       success: false,
     })
@@ -68,7 +73,7 @@ router.post('/', async (req, res, next) => {
     const record = await product.save();
     res.status(201).json(record)
   } catch (error) {
-    console.log(error)
+    console.error(error);
     res.status(500).json({
       success: false,
     })
@@ -81,7 +86,8 @@ router.delete('/:id', async (req, res) => {
     res.status(200).json({
       success: true,
     })
-  } catch (error)  {
+  } catch (error) {
+    console.error(error);
     res.status(500).json({
       success: false,
     })
@@ -95,7 +101,7 @@ router.get('/get/count', async (req, res) => {
       count: productCount
     })
   } catch (error) {
-    console.log('error', error);
+    console.error(error);
     res.status(500).json({
       success: false,
     })
@@ -104,13 +110,13 @@ router.get('/get/count', async (req, res) => {
 
 router.get('/get/featured', async (req, res) => {
   const { limit = 12, offset = 0 } = req.query;
-  console.log(limit, offset);
   try {
     const products = await Product.find({ isFeatured: true })
       .skip(+offset)
       .limit(+limit);
     res.status(200).json(products);
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       success: false,
     })
