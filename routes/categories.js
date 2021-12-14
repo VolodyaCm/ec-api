@@ -8,6 +8,7 @@ router.get(`/`, async (req, res, next) => {
     const categories = await CategoryModel.find();
     res.status(200).json(categories);
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       success: false,
     })

@@ -9,6 +9,8 @@ import Product from './models/product.js';
 import productsRouter from './routes/products.js';
 import usersRouter from './routes/users.js';
 import categoriesRouter from './routes/categories.js';
+import { authJWT } from './helpers/jwt.js';
+import { errorHandler } from './helpers/errorHandler.js';
 
 const { MONGO_URI, API_URL } = process.env;
 
@@ -18,6 +20,8 @@ app.use(cors());
 app.options('*', cors());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
+app.use(authJWT());
+app.use(errorHandler)
 
 app.use(`${API_URL}/products`, productsRouter);
 app.use(`${API_URL}/users`, usersRouter);
