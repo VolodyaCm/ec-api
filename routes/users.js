@@ -93,4 +93,14 @@ router.get('/count', async (req, res) => {
   }
 })
 
+router.delete('/:id', async (req, res) => {
+  try {
+    await User.findByIdAndRemove(req.params.id);
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false });
+  }
+})
+
 export default router;
