@@ -9,6 +9,7 @@ import Product from './models/product.js';
 import productsRouter from './routes/products.js';
 import usersRouter from './routes/users.js';
 import categoriesRouter from './routes/categories.js';
+import ordersRouter from './routes/orders.js';
 import { authJWT } from './helpers/jwt.js';
 import { errorHandler } from './helpers/errorHandler.js';
 
@@ -26,6 +27,7 @@ app.use(errorHandler)
 app.use(`${API_URL}/products`, productsRouter);
 app.use(`${API_URL}/users`, usersRouter);
 app.use(`${API_URL}/categories`, categoriesRouter);
+app.use(`${API_URL}/orders`, ordersRouter);
 
 
 mongoose.connect(MONGO_URI)
